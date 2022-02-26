@@ -12,7 +12,10 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-
+    public List<Product> getAllProduct(){
+        List<Product> res =  productRepository.findAll();
+        return res;
+    }
     public List<Product> searchProduct(String text){
         List<Product> productResult =  productRepository.findByNameContainingIgnoreCase(text);
         if(!productResult.isEmpty()){

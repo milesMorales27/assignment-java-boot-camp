@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("products/")
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
@@ -30,11 +32,15 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-    @GetMapping("SearchProduct/{name}")
+    @GetMapping
+    public List<Product> GetAllProduct(){
+        return productService.getAllProduct();
+    }
+    @GetMapping("/search/{name}")
     public List<Product> GetProduct(@PathVariable String name){
         return productService.searchProduct(name);
     }
-    @GetMapping("product/{id}")
+    @GetMapping("/id/{id}")
     public Product GetProduct(@PathVariable int id){
         return productService.getProductById(id);
     }
