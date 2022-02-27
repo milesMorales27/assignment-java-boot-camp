@@ -1,6 +1,7 @@
 package com.example.workshop_ecommerce.Cart.Payment;
 
 import com.example.workshop_ecommerce.Cart.Cart;
+import com.example.workshop_ecommerce.Cart.CartNotFoundException;
 import com.example.workshop_ecommerce.Cart.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,8 @@ public class PaymentService {
         Optional<Cart> cart = cartRepository.findBycartId(cartId);
         if(cart.isPresent()){
             cart.get().setPaymentDetail(payment);
+            return paymentRepository.save(payment);
         }
-        return paymentRepository.save(payment);
+        throw new CartNotFoundException(cartId);
     }
 }

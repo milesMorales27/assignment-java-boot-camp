@@ -13,8 +13,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     public List<Product> getAllProduct(){
-        List<Product> res =  productRepository.findAll();
-        return res;
+        List<Product> resultList =  productRepository.findAll();
+        return resultList;
     }
     public List<Product> searchProduct(String text){
         List<Product> productResult =  productRepository.findByNameContainingIgnoreCase(text);
@@ -24,7 +24,7 @@ public class ProductService {
         throw new ProductNotFoundException(text);
     }
     public Product getProductById(int id){
-        Optional<Product> result = productRepository.findById(id);
+        Optional<Product> result = productRepository.findByproductId(id);
         if(result.isPresent()){
             return result.get();
         }

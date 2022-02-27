@@ -1,8 +1,8 @@
 package com.example.workshop_ecommerce.Cart.ShippingAddress;
 
 import com.example.workshop_ecommerce.Cart.Cart;
+import com.example.workshop_ecommerce.Cart.CartNotFoundException;
 import com.example.workshop_ecommerce.Cart.CartRepository;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,9 @@ public class ShippingAddressService {
         Optional<Cart> cart = cartRepository.findBycartId(cartId);
         if(cart.isPresent()){
            cart.get().setShippingAddress(shippingAddress);
+           return  shippingAddressRepository.saveAndFlush(shippingAddress);
         }
-        return  shippingAddressRepository.saveAndFlush(shippingAddress);
+        throw new CartNotFoundException(cartId);
     }
 
 }

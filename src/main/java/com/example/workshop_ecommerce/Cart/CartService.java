@@ -1,4 +1,7 @@
 package com.example.workshop_ecommerce.Cart;
+import com.example.workshop_ecommerce.Product.Product;
+import com.example.workshop_ecommerce.Product.ProductIDNotFoundException;
+import com.example.workshop_ecommerce.Product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,8 @@ public class CartService {
     @Autowired
     private CartRepository cartRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
     public Optional<Cart> getCart(int userId){
         Optional<Cart> cart_result = cartRepository.findByUser_userId(userId);
         if(cart_result.isPresent()){
@@ -20,15 +25,25 @@ public class CartService {
     @Autowired
     private CartItemRepository cartItemRepository;
     public CartItem addCartItem(CartItem cartItem){
-        int productInCartID = cartItem.getProductId();
-        Optional<CartItem> exitProductId = cartItemRepository.findByproductId(productInCartID);
-        if(exitProductId.isPresent()){
-            int nowQuantity = cartItem.getQuantity() + exitProductId.get().getQuantity();
-            exitProductId.get().setQuantity(nowQuantity);
-            return cartItemRepository.saveAndFlush(exitProductId.get());
-        }else{
-            return cartItemRepository.saveAndFlush(cartItem);
+        int cartId = cartItem.getCartId().getCartId();
+        Optional<Cart> cart = cartRepository.findBycartId(cartId);
+        if(cart.isPresent()) {
+            int productInCartID = cartItem.getProductId();
+            Optional<Product> product = productRepository.findByproductId(productInCartID);
+            if (product.isPresent()) {
+                Optional<CartItem> exitProductId = cartItemRepository.findByproductId(productInCartID);
+                if (exitProductId.isPresent()) {
+                    int nowQuantity = cartItem.getQuantity() + exitProductId.get().getQuantity();
+                    exitProductId.get().setQuantity(nowQuantity);
+                    return cartItemRepository.saveAndFlush(exitProductId.get());
+                } else {
+                    return cartItemRepository.saveAndFlush(cartItem);
+                }
+            }
+            throw new ProductIDNotFoundException(productInCartID);
         }
+        throw new CartNotFoundException(cartId);
+
     }
     public String deleteCartItem(int userId , int productId){
         Optional<Cart> cart = cartRepository.findByUser_userId(userId);
@@ -49,6 +64,6 @@ public class CartService {
         if(cart.isPresent()){
             return cart.get().getCartItemList();
         }
-        throw new CartItemNotFoundException("Cart is emptry");
+        throw new CartItemNotFoundException("Cart is empty");
     }
 }
