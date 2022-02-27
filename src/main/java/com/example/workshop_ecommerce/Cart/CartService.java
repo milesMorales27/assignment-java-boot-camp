@@ -1,6 +1,4 @@
 package com.example.workshop_ecommerce.Cart;
-
-import com.example.workshop_ecommerce.Product.ProductIDNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,12 +30,25 @@ public class CartService {
             return cartItemRepository.saveAndFlush(cartItem);
         }
     }
+    public String deleteCartItem(int userId , int productId){
+        Optional<Cart> cart = cartRepository.findByUser_userId(userId);
 
+        if(cart.isPresent()){
+            int cartId = cart.get().getCartId();
+            Optional<CartItem> Product = cartItemRepository.findByCartId_cartIdAndProductId(cartId,productId);
+            if(Product.isPresent()){
+                cartItemRepository.delete(Product.get());
+                return "Success";
+            }
+            throw new CartItemNotFoundException("Item in cart Not found");
+        }
+        throw new CartNotFoundException(userId);
+    }
     public List<CartItem> getCartItem(int userId){
        Optional<Cart> cart = cartRepository.findByUser_userId(userId);
         if(cart.isPresent()){
             return cart.get().getCartItemList();
         }
-        throw new CartItemNotFoundException("Cart is Emtry");
+        throw new CartItemNotFoundException("Cart is emptry");
     }
 }
