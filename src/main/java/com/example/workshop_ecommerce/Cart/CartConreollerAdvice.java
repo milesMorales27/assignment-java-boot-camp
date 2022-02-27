@@ -1,4 +1,4 @@
-package com.example.workshop_ecommerce.Product;
+package com.example.workshop_ecommerce.Cart;
 
 import com.example.workshop_ecommerce.ExceptionModel.ApiException;
 import org.springframework.http.HttpStatus;
@@ -12,24 +12,26 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @RestControllerAdvice
-public class ProductControllerAdvice {
-    @ExceptionHandler(ProductNotFoundException.class)
+public class CartConreollerAdvice {
+    @ExceptionHandler(CartNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Object> productNotFound(ProductNotFoundException e){
+    public ResponseEntity<Object> CartNotFound(CartNotFoundException e){
         HttpStatus notFound = HttpStatus.NOT_FOUND;
-        String ErrorMassage = "Product : " + e.getMessage() + " Not found";
+        String ErrorMassage = "Cart Not Found";
         ApiException apiException = new ApiException(ErrorMassage, notFound, ZonedDateTime.now(ZoneId.of("Asia/Jakarta")));
         return new ResponseEntity<>(apiException,notFound);
 
     }
-    @ExceptionHandler(ProductIDNotFoundException.class)
+
+    @ExceptionHandler(CartItemNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Object> productIdNotFound(ProductIDNotFoundException e){
+    public ResponseEntity<Object> CartItemNotFound(CartItemNotFoundException e){
         HttpStatus notFound = HttpStatus.NOT_FOUND;
-        String ErrorMassage = "Product Not found";
+        String ErrorMassage = e.getMessage();
         ApiException apiException = new ApiException(ErrorMassage, notFound, ZonedDateTime.now(ZoneId.of("Asia/Jakarta")));
         return new ResponseEntity<>(apiException,notFound);
+
     }
 }

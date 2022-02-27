@@ -1,4 +1,4 @@
-package com.example.workshop_ecommerce.Product;
+package com.example.workshop_ecommerce.ExceptionModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

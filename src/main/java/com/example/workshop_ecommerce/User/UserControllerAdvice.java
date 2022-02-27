@@ -1,6 +1,6 @@
 package com.example.workshop_ecommerce.User;
 
-import com.example.workshop_ecommerce.Product.ApiException;
+import com.example.workshop_ecommerce.ExceptionModel.ApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
