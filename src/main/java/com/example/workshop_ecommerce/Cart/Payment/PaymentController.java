@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
     @Autowired
     private PaymentService paymentService;
-    @PostMapping("/addPaymentMethod")
+    @PostMapping("CartCheckOut/addPaymentMethod")
     public Payment addPayment(@RequestBody Payment payment){
         return paymentService.addPaymentMethod(payment);
     }

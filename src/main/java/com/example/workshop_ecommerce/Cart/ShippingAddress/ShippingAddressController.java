@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShippingAddressController {
     @Autowired
     ShippingAddressService shippingAddressService;
-    @PostMapping("/addShippingAddress")
+    @PostMapping("CartCheckOut/addShippingAddress")
     public ShippingAddress addAddress(@RequestBody ShippingAddress shippingAddress){
         return  shippingAddressService.addShippingAddress(shippingAddress);
     }

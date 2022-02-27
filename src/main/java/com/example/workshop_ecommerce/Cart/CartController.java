@@ -21,17 +21,18 @@ public class CartController {
     public Optional<Cart> getCart(@PathVariable int userId){
         return cartService.getCart(userId);
     }
-    @DeleteMapping("deleteItemInCart/{userId}/{productId}")
-    public String deleteItemInCart(@PathVariable int userId, @PathVariable int productId){
-        return cartService.deleteCartItem(userId,productId);
+
+    @DeleteMapping("Cart/deleteItemInCart/{cartId}/{productId}")
+    public String deleteItemInCart(@PathVariable int cartId, @PathVariable int productId){
+        return cartService.deleteCartItem(cartId,productId);
     }
 
-    @PostMapping(path = "/AddProductToCart",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "Cart/AddProductToCart",consumes = MediaType.APPLICATION_JSON_VALUE)
      public CartItem addProductToCart(@RequestBody CartItem cartItem){
         return cartService.addCartItem(cartItem);
     }
 
-    @GetMapping("CartDetail/{userId}")
+    @GetMapping("Cart/CartDetail/{userId}")
     public List<CartItem> getCartDetail(@PathVariable int userId){
         return cartService.getCartItem(userId);
     }

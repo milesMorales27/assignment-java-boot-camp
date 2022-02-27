@@ -45,19 +45,18 @@ public class CartService {
         throw new CartNotFoundException(cartId);
 
     }
-    public String deleteCartItem(int userId , int productId){
-        Optional<Cart> cart = cartRepository.findByUser_userId(userId);
-
+    public String deleteCartItem(int cartId , int productId){
+        Optional<Cart> cart = cartRepository.findBycartId(cartId);
         if(cart.isPresent()){
-            int cartId = cart.get().getCartId();
-            Optional<CartItem> Product = cartItemRepository.findByCartId_cartIdAndProductId(cartId,productId);
+            int getCartId = cart.get().getCartId();
+            Optional<CartItem> Product = cartItemRepository.findByCartId_cartIdAndProductId(getCartId,productId);
             if(Product.isPresent()){
                 cartItemRepository.delete(Product.get());
                 return "Success";
             }
             throw new CartItemNotFoundException("Item in cart Not found");
         }
-        throw new CartNotFoundException(userId);
+        throw new CartNotFoundException(cartId);
     }
     public List<CartItem> getCartItem(int userId){
        Optional<Cart> cart = cartRepository.findByUser_userId(userId);
