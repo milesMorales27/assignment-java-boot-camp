@@ -1,7 +1,8 @@
 package com.example.workshop_ecommerce.Cart;
-import com.example.workshop_ecommerce.Order.OrderCheckOut.OrderCheckOut;
+import com.example.workshop_ecommerce.Cart.Payment.Payment;
+import com.example.workshop_ecommerce.Cart.ShippingAddress.ShippingAddress;
 import com.example.workshop_ecommerce.User.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,8 +35,26 @@ public class Cart {
     )
     @JsonManagedReference
     private List<CartItem> cartItemList;
-    @OneToOne(mappedBy = "cart")
-    @JsonBackReference
-    private OrderCheckOut orderDetail;
+    private String cartStatus;
+    @OneToOne(
+            orphanRemoval = true,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
+    @JoinColumn(
+            name = "shipping_Id",
+            referencedColumnName = "ShippingAddressId"
+    )
+    private ShippingAddress shippingAddress;
+    @OneToOne(
+            orphanRemoval = true,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
+    @JoinColumn(
+            name = "payment_Id",
+            referencedColumnName = "paymentId"
+    )
+    private Payment paymentDetail;
 
 }

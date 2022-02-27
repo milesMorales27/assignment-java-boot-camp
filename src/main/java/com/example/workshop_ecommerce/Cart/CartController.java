@@ -17,7 +17,7 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @GetMapping("Cart/{userId}")
+    @GetMapping("CartCheckOut/{userId}")
     public Optional<Cart> getCart(@PathVariable int userId){
         return cartService.getCart(userId);
     }
