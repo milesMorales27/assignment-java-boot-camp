@@ -58,3 +58,123 @@
     <td>Json</td>
   </tr>
 </table>
+
+Respone body -> /products/search/{name} , /products/id/{id} 
+---
+```js
+{
+    "productId": int,
+    "name": String,
+    "detail": String",
+    "defaultPrice": double,
+    "discount": double,
+    "store": int
+}
+```
+Request body -> /Cart/AddProductToCart 
+---
+```js
+{
+    "cartId": {
+        "cartId": int
+    },
+    "productId" : int1,
+    "quantity": int
+}
+```
+Respone body -> /Cart/CartDetail/{userId}
+---
+```js
+[
+    {
+        "cartItemId": int,
+        "productId": int,
+        "quantity": int
+    }
+ ]
+```
+Respone body -> /CartCheckOut/addShippingAddress
+---
+```js
+
+  {
+      "name": String,
+      "surname": String,
+      "phoneNumber": String,
+      "address": String,
+      "zipcode": String,
+      "province": String,
+      "district": String,
+      "street": String,
+      "cart": {
+          "cartId": int
+      }
+  }
+ 
+```
+Respone body -> /CartCheckOut/addPaymentMethod
+---
+```js
+
+  {
+      "paymentMethod": String,
+      "paymentData": String,
+      "name":" String,
+      "surName": String,
+      "cart": {
+          "cartId": int
+      }
+  }
+ 
+```
+Respone body -> CartCheckOut/{userId}
+---
+```js
+
+  {
+    "cartId": int,
+    "user": {
+        "userId": int,
+        "name": String,
+        "surname": String,
+        "phoneNumber": String,
+        "address": String,
+        "zipcode": String,
+        "province": String,
+        "district": String,
+        "street": String
+    },
+    "cartItemList": [
+        {
+            "cartItemId": int,
+            "productId": int,
+            "quantity": int
+        },
+        {
+            "cartItemId": int,
+            "productId": int,
+            "quantity": int
+        }
+    ],
+    "cartStatus": String,
+    "shippingAddress": {
+        "name": String,
+        "surname": String,
+        "phoneNumber": String,
+        "address": String,
+        "zipcode": String,
+        "province":String,
+        "district": String,
+        "street": String,
+        "shippingAddressId": int
+    },
+    "paymentDetail": {
+        "paymentId": int,
+        "paymentMethod": String,
+        "paymentData": String,
+        "name": String,
+        "surName": String
+    }
+}
+ 
+```
