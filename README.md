@@ -40,13 +40,13 @@
     <td>Json</td>
   </tr>
   <tr>
-    <td>Post</td>
+    <td>POST</td>
     <td>/CartCheckOut/addShippingAddress</td>
     <td>Add address for shipping</td>
     <td>Json</td>
   </tr>
   <tr>
-    <td>GET</td>
+    <td>POST</td>
     <td>/CartCheckOut/addPaymentMethod</td>
     <td>Add payment method</td>
     <td>Json</td>
